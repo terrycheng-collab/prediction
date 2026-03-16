@@ -1,0 +1,24 @@
+dataset,column_name,dtype,non_null_count,null_count,n_unique,example_values,description
+kalshi_top100_active_around_2025-03-24,ticker,str,100,0,100,KXNBA-25-IND | KXMAYORNYCPARTY-25-D | KXMLB-25-LAD,Kalshi market ticker.
+kalshi_top100_active_around_2025-03-24,event_ticker,str,100,0,40,KXNBA-25 | KXMAYORNYCPARTY-25 | KXMLB-25,Kalshi event-level ticker grouping related contracts.
+kalshi_top100_active_around_2025-03-24,market_type,str,100,0,1,binary | binary | binary,Kalshi market type/category.
+kalshi_top100_active_around_2025-03-24,title,str,100,0,97,Will the Indiana Pacers win the NBA Finals? | Will a representative of the Democratic party win the NYC Mayor race in 2025? | Will the Los Angeles D win the Pro Baseball Championship?,Market title.
+kalshi_top100_active_around_2025-03-24,yes_sub_title,str,100,0,72,Indiana | Zohran Mamdani | Los Angeles D,YES contract subtitle/label.
+kalshi_top100_active_around_2025-03-24,no_sub_title,str,100,0,72,Indiana | Zohran Mamdani | Los Angeles D,NO contract subtitle/label.
+kalshi_top100_active_around_2025-03-24,status,str,100,0,2,finalized | finalized | finalized,Market status at fetch time.
+kalshi_top100_active_around_2025-03-24,yes_bid,int64,100,0,14,0 | 0 | 0,Snapshot YES bid at fetch time.
+kalshi_top100_active_around_2025-03-24,yes_ask,int64,100,0,15,100 | 100 | 100,Snapshot YES ask at fetch time.
+kalshi_top100_active_around_2025-03-24,no_bid,int64,100,0,15,0 | 0 | 0,Snapshot NO bid at fetch time.
+kalshi_top100_active_around_2025-03-24,no_ask,int64,100,0,14,100 | 100 | 100,Snapshot NO ask at fetch time.
+kalshi_top100_active_around_2025-03-24,last_price,int64,100,0,18,1 | 99 | 99,Snapshot last traded price at fetch time.
+kalshi_top100_active_around_2025-03-24,volume,int64,100,0,100,58114197 | 48713982 | 41324295,Snapshot cumulative volume field from archive market table.
+kalshi_top100_active_around_2025-03-24,volume_24h,int64,100,0,20,0 | 0 | 0,Snapshot trailing 24h volume at fetch time.
+kalshi_top100_active_around_2025-03-24,open_interest,int64,100,0,100,26959155 | 24879936 | 15064808,Snapshot open interest at fetch time.
+kalshi_top100_active_around_2025-03-24,result,str,100,0,3,no | yes | yes,Settled result if available.
+kalshi_top100_active_around_2025-03-24,created_time,"datetime64[us, America/Los_Angeles]",100,0,61,2025-01-22 11:55:27.969465-08:00 | 2024-11-09 09:46:54.098780-08:00 | 2025-02-12 20:32:37.352032-08:00,Market creation timestamp.
+kalshi_top100_active_around_2025-03-24,open_time,"datetime64[us, America/Los_Angeles]",100,0,23,2025-01-23 05:00:00-08:00 | 2024-11-09 11:00:00-08:00 | 2025-02-13 07:00:00-08:00,Market open timestamp.
+kalshi_top100_active_around_2025-03-24,close_time,"datetime64[us, America/Los_Angeles]",100,0,36,2025-06-22 19:51:09.791711-07:00 | 2025-11-06 19:18:58.747249-08:00 | 2025-11-01 21:26:30.868287-07:00,Market close/settlement timestamp.
+kalshi_top100_active_around_2025-03-24,_fetched_at,datetime64[ns],100,0,23,2025-11-24 01:29:06.477811 | 2025-11-24 02:02:03.222560 | 2025-11-24 01:15:37.606734,Timestamp when this market row was fetched into the archive.
+kalshi_top100_active_around_2025-03-24,created_ts,datetime64[us],100,0,61,2025-01-22 11:55:27.969465 | 2024-11-09 09:46:54.098780 | 2025-02-12 20:32:37.352032,Helper column: parsed created_time timestamp.
+kalshi_top100_active_around_2025-03-24,close_ts,datetime64[us],100,0,36,2025-06-22 19:51:09.791711 | 2025-11-06 19:18:58.747249 | 2025-11-01 21:26:30.868287,Helper column: parsed close_time timestamp.
+kalshi_top100_active_around_2025-03-24,volume_num,float64,100,0,100,58114197.0 | 48713982.0 | 41324295.0,Helper column: numeric version of volume used for sorting.

@@ -1,0 +1,19 @@
+dataset,column_name,dtype,non_null_count,null_count,n_unique,example_values,description
+polymarket_top100_active_around_2025-03-24,id,str,100,0,100,507892 | 507894 | 507286,Polymarket market identifier.
+polymarket_top100_active_around_2025-03-24,condition_id,str,100,0,100,0x763cc84a3cde36b9ce12a8afe6d3e1e3e46e50692e8ec47636c7803c1033cfab | 0x37963e2b3194455fe768cd470571640c758c049b7cda6967449a43a8bd5c835f | 0xce0f82dc8bb789ffd3bc2928db80bbc539fa04dd223d6e15e2d81eabf8e279fe,Conditional token framework condition identifier.
+polymarket_top100_active_around_2025-03-24,question,str,100,0,100,Will the Sacramento Kings win the 2025 NBA Finals? | Will the Toronto Raptors win the 2025 NBA Finals? | Will Aston Villa win the UEFA Champions League?,Market question text.
+polymarket_top100_active_around_2025-03-24,slug,str,100,0,100,will-the-sacramento-kings-win-the-2025-nba-finals | will-the-toronto-raptors-win-the-2025-nba-finals | will-aston-villa-win-the-uefa-champions-league,Human-readable market slug.
+polymarket_top100_active_around_2025-03-24,outcomes,str,100,0,1,"[""Yes"", ""No""] | [""Yes"", ""No""] | [""Yes"", ""No""]",List/string of possible outcomes.
+polymarket_top100_active_around_2025-03-24,outcome_prices,str,100,0,2,"[""0"", ""1""] | [""0"", ""1""] | [""0"", ""1""]",Snapshot outcome prices at fetch time.
+polymarket_top100_active_around_2025-03-24,clob_token_ids,str,100,0,100,"[""41257670817876317355997233596113195194194608207987371129645019730826567930842"", ""6337766885333966690546293438662675059330486971861645192801950206137287554438""] | [""8615283304849028269259042680787343769500144068672958710059180099366119214927"", ""23538341502367016460214883076280471618080465904528266058055509584419858222978""] | [""17148991929546304218678959738430213065524880357303658607403556776126482126118"", ""113944511437047286070977074222535617181404611267671592896303826271480616303572""]",Associated CLOB token identifiers.
+polymarket_top100_active_around_2025-03-24,volume,float64,100,0,100,378011506.511399 | 154220299.964432 | 133113813.382904,Snapshot cumulative volume field from archive market table.
+polymarket_top100_active_around_2025-03-24,liquidity,float64,100,0,1,0.0 | 0.0 | 0.0,Snapshot liquidity field from archive market table.
+polymarket_top100_active_around_2025-03-24,active,bool,100,0,1,True | True | True,Whether market was active at fetch time.
+polymarket_top100_active_around_2025-03-24,closed,bool,100,0,1,True | True | True,Whether market was closed at fetch time.
+polymarket_top100_active_around_2025-03-24,end_date,"datetime64[us, America/Los_Angeles]",98,2,15,2025-06-23 05:00:00-07:00 | 2025-06-23 05:00:00-07:00 | 2025-05-31 05:00:00-07:00,Scheduled market end/resolve time.
+polymarket_top100_active_around_2025-03-24,created_at,"datetime64[us, America/Los_Angeles]",100,0,100,2024-09-24 08:33:30.214289-07:00 | 2024-09-24 08:34:33.830533-07:00 | 2024-09-17 10:21:16.527578-07:00,Market creation timestamp.
+polymarket_top100_active_around_2025-03-24,market_maker_address,str,100,0,1, |  | ,Market maker / contract-related address if available.
+polymarket_top100_active_around_2025-03-24,_fetched_at,datetime64[ns],100,0,14,2026-02-03 22:24:51.447103 | 2026-02-03 22:24:51.447103 | 2026-02-03 22:24:51.047724,Timestamp when this market row was fetched into the archive.
+polymarket_top100_active_around_2025-03-24,created_ts,datetime64[us],100,0,100,2024-09-24 08:33:30.214289 | 2024-09-24 08:34:33.830533 | 2024-09-17 10:21:16.527578,Helper column: parsed created_at timestamp.
+polymarket_top100_active_around_2025-03-24,end_ts,datetime64[us],98,2,15,2025-06-23 05:00:00 | 2025-06-23 05:00:00 | 2025-05-31 05:00:00,Helper column: parsed end_date timestamp.
+polymarket_top100_active_around_2025-03-24,volume_num,float64,100,0,100,378011506.511399 | 154220299.964432 | 133113813.382904,Helper column: numeric version of volume used for sorting.
