@@ -1,0 +1,19 @@
+pm_id,pm_question,k_ticker,k_title,k_yes_subtitle,k_no_subtitle,levenshtein_score,jaccard_score,combined_score,match_type,slug
+510319,Trump ends Ukraine war in first 90 days?,KXPRESVISIT-26-UKR,Will Trump visit Ukraine in the first year?,Ukraine,Ukraine,0.587,0.375,0.502,LOW_CONFIDENCE,mineral_rights
+514345,Will Russia pull out of Syria before April 2025?,KXGOVTRECOGSYRIA-25-RU,Will Russia reocgnize the new government of opposition-led government of Syria before Apr 2025?,Russia,Russia,0.483,0.3,0.41,LOW_CONFIDENCE,mineral_rights
+516143,Will Putin meet with Trump in first 100 days?,KXWLEADER-25-VP,Will Trump meet with Vladimir Putin before 2026?,Vladimir Putin,Vladimir Putin,0.396,0.375,0.388,LOW_CONFIDENCE,mineral_rights
+518889,Will Donald Trump visit Russia in 2025?,KXPRESVISIT-26-RU,Will Trump visit Russia in the first year?,Russia,Russia,0.53,0.429,0.49,LOW_CONFIDENCE,mineral_rights
+518890,Will Donald Trump visit Ukraine in 2025?,KXPRESVISIT-26-UKR,Will Trump visit Ukraine in the first year?,Ukraine,Ukraine,0.529,0.429,0.489,LOW_CONFIDENCE,mineral_rights
+519844,Will Trump meet with Volodymyr Zelenskyy in his first 100 days?,KXWLEADERUKR-25MAR-VZEL,Will Trump meet with Volodomyr Zelenskyy before 2025?,Volodomyr Zelenskyy,Volodomyr Zelenskyy,0.542,0.333,0.458,LOW_CONFIDENCE,mineral_rights
+522878,Will Trump meet with Putin or Zelenskyy first?,KXWLEADER-25-VP,Will Trump meet with Vladimir Putin before 2026?,Vladimir Putin,Vladimir Putin,0.518,0.429,0.482,LOW_CONFIDENCE,mineral_rights
+523197,Will Trump visit Russia in first 100 days?,KXPRESVISIT-26-RU,Will Trump visit Russia in the first year?,Russia,Russia,0.721,0.571,0.661,MEDIUM_CONFIDENCE,mineral_rights
+524145,Will Trump meet with Zelenskyy before July?,KXWLEADERUKR-25MAR-VZEL,Will Trump meet with Volodomyr Zelenskyy before 2025?,Volodomyr Zelenskyy,Volodomyr Zelenskyy,0.565,0.5,0.539,MEDIUM_CONFIDENCE,mineral_rights
+524147,Will Trump meet with Volodymyr Zelenskyy in 2025?,KXWLEADERUKR-25MAR-VZEL,Will Trump meet with Volodomyr Zelenskyy before 2025?,Volodomyr Zelenskyy,Volodomyr Zelenskyy,0.615,0.667,0.636,MEDIUM_CONFIDENCE,mineral_rights
+524291,Will Trump visit Russia before July?,KXPRESVISIT-26-RU,Will Trump visit Russia in the first year?,Russia,Russia,0.55,0.5,0.53,MEDIUM_CONFIDENCE,mineral_rights
+518889,Will Donald Trump visit Russia in 2025?,KXPRESVISIT-26-RU,Will Trump visit Russia in the first year?,Russia,Russia,0.53,0.429,0.49,LOW_CONFIDENCE,zelensky_suit
+518890,Will Donald Trump visit Ukraine in 2025?,KXPRESVISIT-26-UKR,Will Trump visit Ukraine in the first year?,Ukraine,Ukraine,0.529,0.429,0.489,LOW_CONFIDENCE,zelensky_suit
+522878,Will Trump meet with Putin or Zelenskyy first?,KXWLEADER-25-VP,Will Trump meet with Vladimir Putin before 2026?,Vladimir Putin,Vladimir Putin,0.518,0.429,0.482,LOW_CONFIDENCE,zelensky_suit
+536502,Will Trump meet with Vladimir Putin in 2025?,KXWLEADER-25-VP,Will Trump meet with Vladimir Putin before 2026?,Vladimir Putin,Vladimir Putin,0.636,0.667,0.648,MEDIUM_CONFIDENCE,zelensky_suit
+543206,Will Pope Leo visit Ukraine first?,KXPRESVISIT-26-UKR,Will Trump visit Ukraine in the first year?,Ukraine,Ukraine,0.519,0.429,0.483,LOW_CONFIDENCE,zelensky_suit
+546096,Will Pope Leo XIV meet with Vladimir Putin in 2025?,KXLEADERMEETPOPE-26-VPUT,Who will Pope Leo XIV meet with before 2026?,Vladimir Putin,Vladimir Putin,0.678,0.75,0.707,MEDIUM_CONFIDENCE,zelensky_suit
+550708,Will Ukraine qualify for the 2026 FIFA World Cup?,KXMENWORLDCUP-26-UA,Will the Ukraine win the 2026 Men's World Cup?,Ukraine,Ukraine,0.586,0.5,0.552,MEDIUM_CONFIDENCE,zelensky_suit

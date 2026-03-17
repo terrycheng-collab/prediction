@@ -1,0 +1,15 @@
+pm_id,pm_question,k_ticker,k_title,k_yes_subtitle,k_no_subtitle,tfidf_similarity,match_type,slug,method
+524147,Will Trump meet with Volodymyr Zelenskyy in 2025?,KXMARALAGO-26-VZ,"Will Volodymyr Zelenskyy be reported to visit Mar-a-Lago before Jan 1, 2026?",Volodymyr Zelenskyy,Volodymyr Zelenskyy,0.575,LOW_CONFIDENCE,mineral_rights,TFIDF
+524291,Will Trump visit Russia before July?,KXPRESVISIT-26-RU,Will Trump visit Russia in the first year?,Russia,Russia,0.589,LOW_CONFIDENCE,mineral_rights,TFIDF
+527793,Will Volodymyr Zelenskyy be the first leader out in 2025?,KXMARALAGO-26-VZ,"Will Volodymyr Zelenskyy be reported to visit Mar-a-Lago before Jan 1, 2026?",Volodymyr Zelenskyy,Volodymyr Zelenskyy,0.548,LOW_CONFIDENCE,mineral_rights,TFIDF
+527807,Will Vladimir Putin be the first leader out in 2025?,KXWHVISIT-25-VP,"Will Vladimir Putin visit the White House before Apr 1, 2025?",Vladimir Putin,Vladimir Putin,0.673,MEDIUM_CONFIDENCE,mineral_rights,TFIDF
+518889,Will Donald Trump visit Russia in 2025?,KXPRESVISIT-26-RU,Will Trump visit Russia in the first year?,Russia,Russia,0.527,LOW_CONFIDENCE,zelensky_suit,TFIDF
+518890,Will Donald Trump visit Ukraine in 2025?,KXPRESVISIT-26-UKR,Will Trump visit Ukraine in the first year?,Ukraine,Ukraine,0.529,LOW_CONFIDENCE,zelensky_suit,TFIDF
+522878,Will Trump meet with Putin or Zelenskyy first?,KXWLEADER-25-VP,Will Trump meet with Vladimir Putin before 2026?,Vladimir Putin,Vladimir Putin,0.508,LOW_CONFIDENCE,zelensky_suit,TFIDF
+524147,Will Trump meet with Volodymyr Zelenskyy in 2025?,KXWHVISIT-26JAN-VZEL,"Will Volodymyr Zelenskyy visit the White House before Jan 1, 2026?",Volodymyr Zelenskyy,Volodymyr Zelenskyy,0.607,MEDIUM_CONFIDENCE,zelensky_suit,TFIDF
+527793,Will Volodymyr Zelenskyy be the first leader out in 2025?,KXWHVISIT-26JAN-VZEL,"Will Volodymyr Zelenskyy visit the White House before Jan 1, 2026?",Volodymyr Zelenskyy,Volodymyr Zelenskyy,0.617,MEDIUM_CONFIDENCE,zelensky_suit,TFIDF
+527807,Will Vladimir Putin be the first leader out in 2025?,KXLEADEROUT-25-VPUT,Vladimir Putin out this year?,Vladimir Putin,Vladimir Putin,0.65,MEDIUM_CONFIDENCE,zelensky_suit,TFIDF
+536502,Will Trump meet with Vladimir Putin in 2025?,KXWLEADER-25-VP,Will Trump meet with Vladimir Putin before 2026?,Vladimir Putin,Vladimir Putin,0.829,HIGH_CONFIDENCE,zelensky_suit,TFIDF
+543206,Will Pope Leo visit Ukraine first?,KXPOPEVISITNEXT-26-UA,Which country will the Pope visit next?,Ukraine,Ukraine,0.654,MEDIUM_CONFIDENCE,zelensky_suit,TFIDF
+546096,Will Pope Leo XIV meet with Vladimir Putin in 2025?,KXLEADERMEETPOPE-26-VPUT,Who will Pope Leo XIV meet with before 2026?,Vladimir Putin,Vladimir Putin,0.897,HIGH_CONFIDENCE,zelensky_suit,TFIDF
+550708,Will Ukraine qualify for the 2026 FIFA World Cup?,KXMENWORLDCUP-26-UA,Will the Ukraine win the 2026 Men's World Cup?,Ukraine,Ukraine,0.518,LOW_CONFIDENCE,zelensky_suit,TFIDF

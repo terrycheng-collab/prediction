@@ -1,0 +1,59 @@
+pm_id,pm_question,k_ticker,k_title,k_yes_subtitle,k_no_subtitle,embedding_similarity,match_type,slug,method
+536502,Will Trump meet with Vladimir Putin in 2025?,KXWLEADER-25-VP,Will Trump meet with Vladimir Putin before 2026?,Vladimir Putin,Vladimir Putin,0.941,HIGH_CONFIDENCE,zelensky_suit,EMBEDDING
+546096,Will Pope Leo XIV meet with Vladimir Putin in 2025?,KXLEADERMEETPOPE-26-VPUT,Who will Pope Leo XIV meet with before 2026?,Vladimir Putin,Vladimir Putin,0.939,HIGH_CONFIDENCE,zelensky_suit,EMBEDDING
+524147,Will Trump meet with Volodymyr Zelenskyy in 2025?,KXWLEADERUKR-25MAR-VZEL,Will Trump meet with Volodomyr Zelenskyy before 2025?,Volodomyr Zelenskyy,Volodomyr Zelenskyy,0.922,HIGH_CONFIDENCE,mineral_rights,EMBEDDING
+550708,Will Ukraine qualify for the 2026 FIFA World Cup?,KXMENWORLDCUP-26-UA,Will the Ukraine win the 2026 Men's World Cup?,Ukraine,Ukraine,0.882,HIGH_CONFIDENCE,zelensky_suit,EMBEDDING
+524291,Will Trump visit Russia before July?,KXPRESVISIT-26-RU,Will Trump visit Russia in the first year?,Russia,Russia,0.881,HIGH_CONFIDENCE,mineral_rights,EMBEDDING
+523197,Will Trump visit Russia in first 100 days?,KXPRESVISIT-26-RU,Will Trump visit Russia in the first year?,Russia,Russia,0.874,HIGH_CONFIDENCE,mineral_rights,EMBEDDING
+525157,Zelensky resigns in 2025?,KXUKRAINERESIGN-26,"Will Volodymyr Zelenskyy resign before Jan 1, 2026?",Before 2026,Before 2026,0.871,HIGH_CONFIDENCE,mineral_rights,EMBEDDING
+525157,Zelensky resigns in 2025?,KXUKRAINERESIGN-26,"Will Volodymyr Zelenskyy resign before Jan 1, 2026?",Before 2026,Before 2026,0.871,HIGH_CONFIDENCE,zelensky_suit,EMBEDDING
+518890,Will Donald Trump visit Ukraine in 2025?,KXPRESVISIT-26-UKR,Will Trump visit Ukraine in the first year?,Ukraine,Ukraine,0.865,HIGH_CONFIDENCE,mineral_rights,EMBEDDING
+518890,Will Donald Trump visit Ukraine in 2025?,KXPRESVISIT-26-UKR,Will Trump visit Ukraine in the first year?,Ukraine,Ukraine,0.865,HIGH_CONFIDENCE,zelensky_suit,EMBEDDING
+543206,Will Pope Leo visit Ukraine first?,KXPOPEVISITNEXT-26-UA,Which country will the Pope visit next?,Ukraine,Ukraine,0.849,HIGH_CONFIDENCE,zelensky_suit,EMBEDDING
+518889,Will Donald Trump visit Russia in 2025?,KXPRESVISIT-26-RU,Will Trump visit Russia in the first year?,Russia,Russia,0.846,HIGH_CONFIDENCE,mineral_rights,EMBEDDING
+518889,Will Donald Trump visit Russia in 2025?,KXPRESVISIT-26-RU,Will Trump visit Russia in the first year?,Russia,Russia,0.846,HIGH_CONFIDENCE,zelensky_suit,EMBEDDING
+519844,Will Trump meet with Volodymyr Zelenskyy in his first 100 days?,KXWLEADERUKR-25MAR-VZEL,Will Trump meet with Volodomyr Zelenskyy before 2025?,Volodomyr Zelenskyy,Volodomyr Zelenskyy,0.841,HIGH_CONFIDENCE,mineral_rights,EMBEDDING
+524145,Will Trump meet with Zelenskyy before July?,KXWLEADERUKR-25MAR-VZEL,Will Trump meet with Volodomyr Zelenskyy before 2025?,Volodomyr Zelenskyy,Volodomyr Zelenskyy,0.838,HIGH_CONFIDENCE,mineral_rights,EMBEDDING
+516143,Will Putin meet with Trump in first 100 days?,KXWLEADER-25-VP,Will Trump meet with Vladimir Putin before 2026?,Vladimir Putin,Vladimir Putin,0.83,HIGH_CONFIDENCE,mineral_rights,EMBEDDING
+523343,Ukraine election called in 2025?,KXELECTUKRAINE-26,Will Ukraine hold a presidential election before 2026?,Before 2026,Before 2026,0.828,HIGH_CONFIDENCE,mineral_rights,EMBEDDING
+523343,Ukraine election called in 2025?,KXELECTUKRAINE-26,Will Ukraine hold a presidential election before 2026?,Before 2026,Before 2026,0.828,HIGH_CONFIDENCE,zelensky_suit,EMBEDDING
+519048,Zelenskyy out as Ukraine president before July?,KXUKRIMPEACH-26,Will Zelenskyy be removed from office by the Ukrainian parliamenent before 2026?,Before 2026,Before 2026,0.822,HIGH_CONFIDENCE,mineral_rights,EMBEDDING
+527793,Will Volodymyr Zelenskyy be the first leader out in 2025?,KXUKRAINERESIGN-26,"Will Volodymyr Zelenskyy resign before Jan 1, 2026?",Before 2026,Before 2026,0.808,HIGH_CONFIDENCE,mineral_rights,EMBEDDING
+527793,Will Volodymyr Zelenskyy be the first leader out in 2025?,KXUKRAINERESIGN-26,"Will Volodymyr Zelenskyy resign before Jan 1, 2026?",Before 2026,Before 2026,0.808,HIGH_CONFIDENCE,zelensky_suit,EMBEDDING
+545879,Will Putin meet with Zelenskyy in 2025?,KXWLEADER-25-VP,Will Trump meet with Vladimir Putin before 2026?,Vladimir Putin,Vladimir Putin,0.801,HIGH_CONFIDENCE,zelensky_suit,EMBEDDING
+526195,Trump meets with Zelenskyy in March?,KXWLEADERUKR-25MAR-VZEL,Will Trump meet with Volodomyr Zelenskyy before 2025?,Volodomyr Zelenskyy,Volodomyr Zelenskyy,0.799,MEDIUM_CONFIDENCE,mineral_rights,EMBEDDING
+522878,Will Trump meet with Putin or Zelenskyy first?,KXWLEADER-25-VP,Will Trump meet with Vladimir Putin before 2026?,Vladimir Putin,Vladimir Putin,0.789,MEDIUM_CONFIDENCE,mineral_rights,EMBEDDING
+522878,Will Trump meet with Putin or Zelenskyy first?,KXWLEADER-25-VP,Will Trump meet with Vladimir Putin before 2026?,Vladimir Putin,Vladimir Putin,0.789,MEDIUM_CONFIDENCE,zelensky_suit,EMBEDDING
+523198,Will Putin visit the U.S. before July?,KXPRESVISIT-26-RU,Will Trump visit Russia in the first year?,Russia,Russia,0.783,MEDIUM_CONFIDENCE,mineral_rights,EMBEDDING
+523420,"Ukraine election held by December 31, 2025?",KXELECTUKRAINE-26,Will Ukraine hold a presidential election before 2026?,Before 2026,Before 2026,0.783,MEDIUM_CONFIDENCE,mineral_rights,EMBEDDING
+523420,"Ukraine election held by December 31, 2025?",KXELECTUKRAINE-26,Will Ukraine hold a presidential election before 2026?,Before 2026,Before 2026,0.783,MEDIUM_CONFIDENCE,zelensky_suit,EMBEDDING
+515428,Will Russia recognize Syrian government by March 31?,KXGOVTRECOGSYRIA-25-RU,Will Russia reocgnize the new government of opposition-led government of Syria before Apr 2025?,Russia,Russia,0.782,MEDIUM_CONFIDENCE,mineral_rights,EMBEDDING
+514345,Will Russia pull out of Syria before April 2025?,KXGOVTRECOGSYRIA-25-RU,Will Russia reocgnize the new government of opposition-led government of Syria before Apr 2025?,Russia,Russia,0.774,MEDIUM_CONFIDENCE,mineral_rights,EMBEDDING
+524147,Will Trump meet with Volodymyr Zelenskyy in 2025?,KXWHVISIT-26JAN-VZEL,"Will Volodymyr Zelenskyy visit the White House before Jan 1, 2026?",Volodymyr Zelenskyy,Volodymyr Zelenskyy,0.774,MEDIUM_CONFIDENCE,zelensky_suit,EMBEDDING
+527081,Will Trump meet with Putin in Saudi Arabia before June?,KXWLEADER-25-VP,Will Trump meet with Vladimir Putin before 2026?,Vladimir Putin,Vladimir Putin,0.762,MEDIUM_CONFIDENCE,mineral_rights,EMBEDDING
+527626,Will Ukraine agree to cede territory to Russia in 2025?,KXTPSUKR-25,Will Temporary Protected Status for Ukraine end in 2025?,In 2025,In 2025,0.758,MEDIUM_CONFIDENCE,zelensky_suit,EMBEDDING
+527807,Will Vladimir Putin be the first leader out in 2025?,KXWHVISIT-25-VP,"Will Vladimir Putin visit the White House before Apr 1, 2025?",Vladimir Putin,Vladimir Putin,0.745,MEDIUM_CONFIDENCE,mineral_rights,EMBEDDING
+527807,Will Vladimir Putin be the first leader out in 2025?,KXWHVISIT-26JAN-VPUT,"Will Vladimir Putin visit the White House before Jan 1, 2026?",Vladimir Putin,Vladimir Putin,0.741,MEDIUM_CONFIDENCE,zelensky_suit,EMBEDDING
+527626,Will Ukraine agree to cede territory to Russia in 2025?,KXELECTUKRAINE-26,Will Ukraine hold a presidential election before 2026?,Before 2026,Before 2026,0.738,MEDIUM_CONFIDENCE,mineral_rights,EMBEDDING
+526229,Trump severs ties with Ukraine before May?,KXPRESVISIT-26-UKR,Will Trump visit Ukraine in the first year?,Ukraine,Ukraine,0.732,MEDIUM_CONFIDENCE,mineral_rights,EMBEDDING
+553680,Will Putin meet with Zelenskyy before August?,KXWLEADER-25-VP,Will Trump meet with Vladimir Putin before 2026?,Vladimir Putin,Vladimir Putin,0.717,MEDIUM_CONFIDENCE,zelensky_suit,EMBEDDING
+524292,Will Trump withdraw the U.S. from NATO in 2025?,KXUSAMBNATO-25-DEC,When will Trump's nominee for Ambassador to NATO be confirmed?,Before Dec 2025,Before Dec 2025,0.715,MEDIUM_CONFIDENCE,mineral_rights,EMBEDDING
+522057,"Ukraine recognizes Russian sovereignty over its territory by December 31, 2025?",KXTPSUKR-25,Will Temporary Protected Status for Ukraine end in 2025?,In 2025,In 2025,0.714,MEDIUM_CONFIDENCE,zelensky_suit,EMBEDDING
+545862,Will the Vatican host Russia-Ukraine peace talks before September?,KXPOPEVISITNEXT-26-UA,Which country will the Pope visit next?,Ukraine,Ukraine,0.713,MEDIUM_CONFIDENCE,zelensky_suit,EMBEDDING
+516719,Russia x Ukraine ceasefire in 2025?,KXTPSUKR-25,Will Temporary Protected Status for Ukraine end in 2025?,In 2025,In 2025,0.711,MEDIUM_CONFIDENCE,zelensky_suit,EMBEDDING
+523413,Will any country leave NATO in 2025?,KXBOYCOTTWC-26,Will any NATO member state boycott the USA World Cup in 2026?,Before 2026,Before 2026,0.696,LOW_CONFIDENCE,zelensky_suit,EMBEDDING
+521103,NATO/EU troops fighting in Ukraine in 2025?,KXTPSUKR-25,Will Temporary Protected Status for Ukraine end in 2025?,In 2025,In 2025,0.69,LOW_CONFIDENCE,zelensky_suit,EMBEDDING
+516190,Will Putin remain President of Russia through June?,KXWHVISIT-25-VP,"Will Vladimir Putin visit the White House before Apr 1, 2025?",Vladimir Putin,Vladimir Putin,0.687,LOW_CONFIDENCE,mineral_rights,EMBEDDING
+524309,Will the US sanction Ukraine before April?,KXPRESVISIT-26-UKR,Will Trump visit Ukraine in the first year?,Ukraine,Ukraine,0.686,LOW_CONFIDENCE,mineral_rights,EMBEDDING
+525232,EU/NATO country announces peacekeeping force in Ukraine in 2025?,KXTPSUKR-25,Will Temporary Protected Status for Ukraine end in 2025?,In 2025,In 2025,0.686,LOW_CONFIDENCE,zelensky_suit,EMBEDDING
+527864,Trump-Putin-Xi meeting before July?,KXWLEADER-25-VP,Will Trump meet with Vladimir Putin before 2026?,Vladimir Putin,Vladimir Putin,0.679,LOW_CONFIDENCE,mineral_rights,EMBEDDING
+524143,Will Trump audit Ukraine aid before May?,KXPRESVISIT-26-UKR,Will Trump visit Ukraine in the first year?,Ukraine,Ukraine,0.677,LOW_CONFIDENCE,mineral_rights,EMBEDDING
+525442,Will Karoline Leavitt say NATO during next White House press briefing?-02262025,KXBILATERALMENTION-25JUN06-NATO,What will Trump say during next bilateral meeting with a foreign leader in the Oval Office?,NATO,NATO,0.672,LOW_CONFIDENCE,zelensky_suit,EMBEDDING
+527278,Will the US sanction Russia before May?,KXSECSTATEVISIT-26-RUS,Will the Secretary of State visit Russia before 2026?,Russia,Russia,0.669,LOW_CONFIDENCE,mineral_rights,EMBEDDING
+551479,Will Trump increase sanctions on Russia before August?,KXFTACOUNTRIES-26-RUS,"Will Trump make a new  before Jan 1, 2026?",Russia,Russia,0.669,LOW_CONFIDENCE,zelensky_suit,EMBEDDING
+517073,Assad leaves Russia before 2026?,KXSECSTATEVISIT-26-RUS,Will the Secretary of State visit Russia before 2026?,Russia,Russia,0.663,LOW_CONFIDENCE,mineral_rights,EMBEDDING
+517073,Assad leaves Russia before 2026?,KXSECSTATEVISIT-26-RUS,Will the Secretary of State visit Russia before 2026?,Russia,Russia,0.663,LOW_CONFIDENCE,zelensky_suit,EMBEDDING
+548083,Will Russia invade a NATO country in 2025?,KXFLIGHTSRUSSIA-25,Will U.S. direct flights to Russia resume in 2025?,In 2025,In 2025,0.66,LOW_CONFIDENCE,zelensky_suit,EMBEDDING
+521603,Will Ukraine win Eurovision 2025?,KXELECTUKRAINE-26,Will Ukraine hold a presidential election before 2026?,Before 2026,Before 2026,0.655,LOW_CONFIDENCE,mineral_rights,EMBEDDING
+526201,Trump cuts Ukraine aid before April?,KXPRESVISIT-26-UKR,Will Trump visit Ukraine in the first year?,Ukraine,Ukraine,0.652,LOW_CONFIDENCE,mineral_rights,EMBEDDING
+524292,Will Trump withdraw the U.S. from NATO in 2025?,KXBOYCOTTWC-26,Will any NATO member state boycott the USA World Cup in 2026?,Before 2026,Before 2026,0.65,LOW_CONFIDENCE,zelensky_suit,EMBEDDING

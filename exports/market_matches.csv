@@ -1,0 +1,24 @@
+pm_id,pm_question,k_ticker,k_title,levenshtein_score,jaccard_score,combined_score,match_type,slug
+510319,Trump ends Ukraine war in first 90 days?,KXPRESVISIT-26-UKR,Will Trump visit Ukraine in the first year? Ukraine Ukraine,0.587,0.375,0.502,LOW_CONFIDENCE,mineral_rights
+516143,Will Putin meet with Trump in first 100 days?,KXWLEADER-25-VP,Will Trump meet with Vladimir Putin before 2026? Vladimir Putin Vladimir Putin,0.396,0.375,0.388,LOW_CONFIDENCE,mineral_rights
+518889,Will Donald Trump visit Russia in 2025?,KXPRESVISIT-26-RU,Will Trump visit Russia in the first year? Russia Russia,0.53,0.429,0.49,LOW_CONFIDENCE,mineral_rights
+518890,Will Donald Trump visit Ukraine in 2025?,KXPRESVISIT-26-UKR,Will Trump visit Ukraine in the first year? Ukraine Ukraine,0.529,0.429,0.489,LOW_CONFIDENCE,mineral_rights
+519844,Will Trump meet with Volodymyr Zelenskyy in his first 100 days?,KXWLEADERUKR-25MAR-VZEL,Will Trump meet with Volodomyr Zelenskyy before 2025? Volodomyr Zelenskyy Volodomyr Zelenskyy,0.542,0.333,0.458,LOW_CONFIDENCE,mineral_rights
+522878,Will Trump meet with Putin or Zelenskyy first?,KXWLEADER-25-VP,Will Trump meet with Vladimir Putin before 2026? Vladimir Putin Vladimir Putin,0.518,0.429,0.482,LOW_CONFIDENCE,mineral_rights
+523197,Will Trump visit Russia in first 100 days?,KXPRESVISIT-26-RU,Will Trump visit Russia in the first year? Russia Russia,0.721,0.571,0.661,MEDIUM_CONFIDENCE,mineral_rights
+523420,"Ukraine election held by December 31, 2025?",KXELECTUKRAINE-26,Will Ukraine hold a presidential election before 2026? Before 2026 Before 2026,0.387,0.333,0.366,LOW_CONFIDENCE,mineral_rights
+524145,Will Trump meet with Zelenskyy before July?,KXWLEADERUKR-25MAR-VZEL,Will Trump meet with Volodomyr Zelenskyy before 2025? Volodomyr Zelenskyy Volodomyr Zelenskyy,0.565,0.5,0.539,MEDIUM_CONFIDENCE,mineral_rights
+524147,Will Trump meet with Volodymyr Zelenskyy in 2025?,KXWLEADERUKR-25MAR-VZEL,Will Trump meet with Volodomyr Zelenskyy before 2025? Volodomyr Zelenskyy Volodomyr Zelenskyy,0.615,0.667,0.636,MEDIUM_CONFIDENCE,mineral_rights
+524291,Will Trump visit Russia before July?,KXPRESVISIT-26-RU,Will Trump visit Russia in the first year? Russia Russia,0.55,0.5,0.53,MEDIUM_CONFIDENCE,mineral_rights
+524292,Will Trump withdraw the U.S. from NATO in 2025?,KXUSAMBNATO-25-MAY,When will Trump's nominee for Ambassador to NATO be confirmed? Before May 2025 Before May 2025,0.4,0.429,0.411,LOW_CONFIDENCE,mineral_rights
+527081,Will Trump meet with Putin in Saudi Arabia before June?,KXWLEADER-25-VP,Will Trump meet with Vladimir Putin before 2026? Vladimir Putin Vladimir Putin,0.512,0.375,0.457,LOW_CONFIDENCE,mineral_rights
+527807,Will Vladimir Putin be the first leader out in 2025?,KXWHVISIT-25-VP,"Will Vladimir Putin visit the White House before Apr 1, 2025? Vladimir Putin Vladimir Putin",0.477,0.333,0.419,LOW_CONFIDENCE,mineral_rights
+518889,Will Donald Trump visit Russia in 2025?,KXPRESVISIT-26-RU,Will Trump visit Russia in the first year? Russia Russia,0.53,0.429,0.49,LOW_CONFIDENCE,zelensky_suit
+518890,Will Donald Trump visit Ukraine in 2025?,KXPRESVISIT-26-UKR,Will Trump visit Ukraine in the first year? Ukraine Ukraine,0.529,0.429,0.489,LOW_CONFIDENCE,zelensky_suit
+522878,Will Trump meet with Putin or Zelenskyy first?,KXWLEADER-25-VP,Will Trump meet with Vladimir Putin before 2026? Vladimir Putin Vladimir Putin,0.518,0.429,0.482,LOW_CONFIDENCE,zelensky_suit
+523420,"Ukraine election held by December 31, 2025?",KXELECTUKRAINE-26,Will Ukraine hold a presidential election before 2026? Before 2026 Before 2026,0.387,0.333,0.366,LOW_CONFIDENCE,zelensky_suit
+527807,Will Vladimir Putin be the first leader out in 2025?,KXLEADEROUT-25-VPUT,Vladimir Putin out this year? Vladimir Putin Vladimir Putin,0.423,0.333,0.387,LOW_CONFIDENCE,zelensky_suit
+536502,Will Trump meet with Vladimir Putin in 2025?,KXWLEADER-25-VP,Will Trump meet with Vladimir Putin before 2026? Vladimir Putin Vladimir Putin,0.636,0.667,0.648,MEDIUM_CONFIDENCE,zelensky_suit
+543206,Will Pope Leo visit Ukraine first?,KXPOPEVISITNEXT-26-UA,Which country will the Pope visit next? Ukraine Ukraine,0.519,0.429,0.483,LOW_CONFIDENCE,zelensky_suit
+546096,Will Pope Leo XIV meet with Vladimir Putin in 2025?,KXLEADERMEETPOPE-26-VPUT,Who will Pope Leo XIV meet with before 2026? Vladimir Putin Vladimir Putin,0.708,0.75,0.725,MEDIUM_CONFIDENCE,zelensky_suit
+550708,Will Ukraine qualify for the 2026 FIFA World Cup?,KXMENWORLDCUP-26-UA,Will the Ukraine win the 2026 Men's World Cup? Ukraine Ukraine,0.586,0.5,0.552,MEDIUM_CONFIDENCE,zelensky_suit
