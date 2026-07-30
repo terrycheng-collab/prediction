@@ -3,10 +3,10 @@ from __future__ import annotations
 import argparse
 import glob
 import math
-import struct
-import zlib
 from pathlib import Path
 
+import matplotlib.dates as mdates
+import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 
@@ -63,51 +63,6 @@ def event_start_timestamp(event_spec: dict[str, str]) -> pd.Timestamp:
 
 def event_end_exclusive_timestamp(event_spec: dict[str, str]) -> pd.Timestamp:
     return pd.Timestamp(event_spec["event_end"], tz=PACIFIC_TZ) + pd.Timedelta(days=1)
-
-
-FONT_5X7 = {
-    " ": ["00000", "00000", "00000", "00000", "00000", "00000", "00000"],
-    "-": ["00000", "00000", "00000", "11111", "00000", "00000", "00000"],
-    ".": ["00000", "00000", "00000", "00000", "00000", "01100", "01100"],
-    ":": ["00000", "01100", "01100", "00000", "01100", "01100", "00000"],
-    "/": ["00001", "00010", "00100", "01000", "10000", "00000", "00000"],
-    "0": ["01110", "10001", "10011", "10101", "11001", "10001", "01110"],
-    "1": ["00100", "01100", "00100", "00100", "00100", "00100", "01110"],
-    "2": ["01110", "10001", "00001", "00010", "00100", "01000", "11111"],
-    "3": ["11110", "00001", "00001", "01110", "00001", "00001", "11110"],
-    "4": ["00010", "00110", "01010", "10010", "11111", "00010", "00010"],
-    "5": ["11111", "10000", "10000", "11110", "00001", "00001", "11110"],
-    "6": ["01110", "10000", "10000", "11110", "10001", "10001", "01110"],
-    "7": ["11111", "00001", "00010", "00100", "01000", "01000", "01000"],
-    "8": ["01110", "10001", "10001", "01110", "10001", "10001", "01110"],
-    "9": ["01110", "10001", "10001", "01111", "00001", "00001", "01110"],
-    "A": ["01110", "10001", "10001", "11111", "10001", "10001", "10001"],
-    "B": ["11110", "10001", "10001", "11110", "10001", "10001", "11110"],
-    "C": ["01110", "10001", "10000", "10000", "10000", "10001", "01110"],
-    "D": ["11110", "10001", "10001", "10001", "10001", "10001", "11110"],
-    "E": ["11111", "10000", "10000", "11110", "10000", "10000", "11111"],
-    "F": ["11111", "10000", "10000", "11110", "10000", "10000", "10000"],
-    "G": ["01110", "10001", "10000", "10111", "10001", "10001", "01110"],
-    "H": ["10001", "10001", "10001", "11111", "10001", "10001", "10001"],
-    "I": ["01110", "00100", "00100", "00100", "00100", "00100", "01110"],
-    "J": ["00001", "00001", "00001", "00001", "10001", "10001", "01110"],
-    "K": ["10001", "10010", "10100", "11000", "10100", "10010", "10001"],
-    "L": ["10000", "10000", "10000", "10000", "10000", "10000", "11111"],
-    "M": ["10001", "11011", "10101", "10101", "10001", "10001", "10001"],
-    "N": ["10001", "11001", "10101", "10011", "10001", "10001", "10001"],
-    "O": ["01110", "10001", "10001", "10001", "10001", "10001", "01110"],
-    "P": ["11110", "10001", "10001", "11110", "10000", "10000", "10000"],
-    "Q": ["01110", "10001", "10001", "10001", "10101", "10010", "01101"],
-    "R": ["11110", "10001", "10001", "11110", "10100", "10010", "10001"],
-    "S": ["01111", "10000", "10000", "01110", "00001", "00001", "11110"],
-    "T": ["11111", "00100", "00100", "00100", "00100", "00100", "00100"],
-    "U": ["10001", "10001", "10001", "10001", "10001", "10001", "01110"],
-    "V": ["10001", "10001", "10001", "10001", "10001", "01010", "00100"],
-    "W": ["10001", "10001", "10001", "10101", "10101", "10101", "01010"],
-    "X": ["10001", "10001", "01010", "00100", "01010", "10001", "10001"],
-    "Y": ["10001", "10001", "01010", "00100", "00100", "00100", "00100"],
-    "Z": ["11111", "00001", "00010", "00100", "01000", "10000", "11111"],
-}
 
 
 def normalize_id(series: pd.Series) -> pd.Series:
@@ -713,13 +668,7 @@ def build_group_regressions(panel: pd.DataFrame, outcomes: list[str], group_col:
     return pd.DataFrame(rows)[columns] if rows else pd.DataFrame(columns=columns)
 
 
-def try_matplotlib_plot(event_ts: pd.DataFrame, event_spec: dict[str, str], outpath: Path, outcome_mode: str) -> bool:
-    try:
-        import matplotlib.pyplot as plt
-        import matplotlib.dates as mdates
-    except Exception:
-        return False
-
+def plot_event_timeseries(event_ts: pd.DataFrame, event_spec: dict[str, str], outpath: Path, outcome_mode: str) -> None:
     df = event_ts.sort_values("cutoff_local").copy()
     x = pd.to_datetime(df["cutoff_local"])
     event_start = event_start_timestamp(event_spec)
@@ -763,205 +712,6 @@ def try_matplotlib_plot(event_ts: pd.DataFrame, event_spec: dict[str, str], outp
     fig.tight_layout()
     fig.savefig(outpath, dpi=150)
     plt.close(fig)
-    return True
-
-
-class SimpleCanvas:
-    def __init__(self, width: int, height: int, bg: tuple[int, int, int] = (255, 255, 255)):
-        self.width = width
-        self.height = height
-        self.buf = bytearray(bg * (width * height))
-
-    def set_pixel(self, x: int, y: int, color: tuple[int, int, int]) -> None:
-        if 0 <= x < self.width and 0 <= y < self.height:
-            idx = (y * self.width + x) * 3
-            self.buf[idx : idx + 3] = bytes(color)
-
-    def line(self, x0: int, y0: int, x1: int, y1: int, color: tuple[int, int, int], width: int = 1) -> None:
-        dx = abs(x1 - x0)
-        dy = -abs(y1 - y0)
-        sx = 1 if x0 < x1 else -1
-        sy = 1 if y0 < y1 else -1
-        err = dx + dy
-        while True:
-            half = width // 2
-            for xx in range(x0 - half, x0 + half + 1):
-                for yy in range(y0 - half, y0 + half + 1):
-                    self.set_pixel(xx, yy, color)
-            if x0 == x1 and y0 == y1:
-                break
-            e2 = 2 * err
-            if e2 >= dy:
-                err += dy
-                x0 += sx
-            if e2 <= dx:
-                err += dx
-                y0 += sy
-
-    def rect(self, x0: int, y0: int, x1: int, y1: int, color: tuple[int, int, int], fill: bool = False) -> None:
-        if fill:
-            for y in range(min(y0, y1), max(y0, y1) + 1):
-                self.line(x0, y, x1, y, color)
-        else:
-            self.line(x0, y0, x1, y0, color)
-            self.line(x1, y0, x1, y1, color)
-            self.line(x1, y1, x0, y1, color)
-            self.line(x0, y1, x0, y0, color)
-
-    def translucent_rect(
-        self,
-        x0: int,
-        y0: int,
-        x1: int,
-        y1: int,
-        color: tuple[int, int, int],
-        alpha: float = 0.12,
-    ) -> None:
-        left, right = sorted((max(0, x0), min(self.width - 1, x1)))
-        top, bottom = sorted((max(0, y0), min(self.height - 1, y1)))
-        for y in range(top, bottom + 1):
-            for x in range(left, right + 1):
-                idx = (y * self.width + x) * 3
-                old = self.buf[idx : idx + 3]
-                blended = bytes(int(old[i] * (1 - alpha) + color[i] * alpha) for i in range(3))
-                self.buf[idx : idx + 3] = blended
-
-    def text(self, x: int, y: int, text: str, color: tuple[int, int, int], scale: int = 2) -> None:
-        cursor = x
-        for char in text.upper():
-            glyph = FONT_5X7.get(char, FONT_5X7[" "])
-            for row_idx, row in enumerate(glyph):
-                for col_idx, pixel in enumerate(row):
-                    if pixel == "1":
-                        self.rect(
-                            cursor + col_idx * scale,
-                            y + row_idx * scale,
-                            cursor + (col_idx + 1) * scale - 1,
-                            y + (row_idx + 1) * scale - 1,
-                            color,
-                            fill=True,
-                        )
-            cursor += 6 * scale
-
-    def save_png(self, path: Path) -> None:
-        raw = bytearray()
-        stride = self.width * 3
-        for y in range(self.height):
-            raw.append(0)
-            raw.extend(self.buf[y * stride : (y + 1) * stride])
-        compressed = zlib.compress(bytes(raw), 9)
-
-        def chunk(tag: bytes, data: bytes) -> bytes:
-            return (
-                struct.pack(">I", len(data))
-                + tag
-                + data
-                + struct.pack(">I", zlib.crc32(tag + data) & 0xFFFFFFFF)
-            )
-
-        ihdr = struct.pack(">IIBBBBB", self.width, self.height, 8, 2, 0, 0, 0)
-        path.write_bytes(b"\x89PNG\r\n\x1a\n" + chunk(b"IHDR", ihdr) + chunk(b"IDAT", compressed) + chunk(b"IEND", b""))
-
-
-def fallback_png_plot(event_ts: pd.DataFrame, event_spec: dict[str, str], outpath: Path, outcome_mode: str) -> None:
-    width, height = 1100, 760
-    canvas = SimpleCanvas(width, height)
-    canvas.text(45, 20, f"{event_spec['label']} strict matched markets", (30, 30, 30), scale=2)
-
-    if outcome_mode in {"attenuation", "both"}:
-        panels = [
-            (120, 85, 1040, 350, "|PM - 0.50|", "weighted_pm_abs_from_50", "WEIGHTED |PM - 0.50|", (31, 119, 180)),
-            (
-                120,
-                430,
-                1040,
-                695,
-                "|PM - 0.50| - |K - 0.50|",
-                "weighted_pm_abs_minus_k_abs_from_50",
-                "WEIGHTED PM-K DISTANCE SPREAD",
-                (44, 160, 44),
-            ),
-        ]
-    else:
-        panels = [
-            (120, 85, 1040, 350, "PM YES PRICE", "weighted_pm_yes_price", "WEIGHTED PM YES", (31, 119, 180)),
-            (120, 430, 1040, 695, "PM-K SPREAD", "weighted_pm_minus_k", "WEIGHTED PM-K", (44, 160, 44)),
-        ]
-    df = event_ts.sort_values("cutoff_local").copy()
-    x_datetimes = pd.to_datetime(df["cutoff_local"], utc=True)
-    x_values = x_datetimes.map(lambda value: value.timestamp())
-    x_min = float(x_values.min())
-    x_max = float(x_values.max())
-    if x_max <= x_min:
-        x_max = x_min + 1.0
-    event_start = event_start_timestamp(event_spec).tz_convert("UTC").timestamp()
-    event_end = event_end_exclusive_timestamp(event_spec).tz_convert("UTC").timestamp()
-    event_start_label = pd.Timestamp(event_spec["event_start"]).strftime("%m-%d")
-    event_end_label = pd.Timestamp(event_spec["event_end"]).strftime("%m-%d")
-
-    def x_to_px(value: float, left: int, right: int) -> int:
-        return int(left + (value - x_min) / (x_max - x_min) * (right - left))
-
-    x_tick_count = 6
-    x_ticks = np.linspace(x_min, x_max, x_tick_count)
-    x_tick_labels = [
-        pd.Timestamp.fromtimestamp(float(value), tz="UTC").strftime("%m-%d")
-        for value in x_ticks
-    ]
-
-    for left, top, right, bottom, title, col, y_axis_label, color in panels:
-        y_values = df[col].astype(float)
-        y_min = float(y_values.min())
-        y_max = float(y_values.max())
-        if y_max <= y_min:
-            y_max = y_min + 1.0
-        pad = (y_max - y_min) * 0.12
-        y_min -= pad
-        y_max += pad
-
-        def y_to_px(value: float) -> int:
-            return int(bottom - (value - y_min) / (y_max - y_min) * (bottom - top))
-
-        canvas.text(left, top - 30, title, (35, 35, 35), scale=2)
-        canvas.rect(left, top, right, bottom, (40, 40, 40))
-
-        event_start_x = x_to_px(event_start, left, right)
-        event_end_x = x_to_px(event_end, left, right)
-        canvas.translucent_rect(event_start_x, top, event_end_x, bottom, (210, 45, 45), alpha=0.10)
-
-        y_tick_values = np.linspace(y_min, y_max, 6)
-        for y_tick in y_tick_values:
-            y = y_to_px(float(y_tick))
-            canvas.line(left, y, right, y, (225, 225, 225))
-            canvas.line(left - 5, y, left, y, (40, 40, 40))
-            canvas.text(38, y - 5, f"{y_tick:.3f}", (70, 70, 70), scale=1)
-
-        for x_tick, x_label in zip(x_ticks, x_tick_labels):
-            x = x_to_px(float(x_tick), left, right)
-            canvas.line(x, bottom, x, bottom + 5, (40, 40, 40))
-            canvas.text(x - 15, bottom + 12, x_label, (70, 70, 70), scale=1)
-
-        for marker, dashed in [(event_start, False), (event_end, True)]:
-            x = x_to_px(marker, left, right)
-            if dashed:
-                for yy in range(top, bottom, 12):
-                    canvas.line(x, yy, x, min(yy + 6, bottom), (210, 45, 45), width=2)
-            else:
-                canvas.line(x, top, x, bottom, (210, 45, 45), width=2)
-
-        canvas.text(max(left, event_start_x - 28), top + 8, f"START {event_start_label}", (160, 30, 30), scale=1)
-        canvas.text(min(right - 58, event_end_x - 28), top + 22, f"END {event_end_label}", (160, 30, 30), scale=1)
-
-        points = [(x_to_px(float(x), left, right), y_to_px(float(y))) for x, y in zip(x_values, y_values)]
-        for (x0, y0), (x1, y1) in zip(points, points[1:]):
-            canvas.line(x0, y0, x1, y1, color, width=3)
-        for x, y in points:
-            canvas.rect(x - 2, y - 2, x + 2, y + 2, color, fill=True)
-
-        canvas.text(left + 355, bottom + 35, "CUTOFF DATE PT", (70, 70, 70), scale=1)
-        canvas.text(8, top + 118, y_axis_label, (70, 70, 70), scale=1)
-    canvas.text(120, 728, "SHADED RED AREA IS EVENT RANGE / SOLID START / DASHED END", (90, 90, 90), scale=1)
-    canvas.save_png(outpath)
 
 
 def write_plots(timeseries: pd.DataFrame, exports_dir: Path, output_prefix: str, outcome_mode: str) -> list[Path]:
@@ -971,8 +721,7 @@ def write_plots(timeseries: pd.DataFrame, exports_dir: Path, output_prefix: str,
         if event_ts.empty:
             continue
         outpath = exports_dir / f"{output_prefix}_{event_slug}_timeseries.png"
-        if not try_matplotlib_plot(event_ts, event_spec, outpath, outcome_mode):
-            fallback_png_plot(event_ts, event_spec, outpath, outcome_mode)
+        plot_event_timeseries(event_ts, event_spec, outpath, outcome_mode)
         paths.append(outpath)
     return paths
 

@@ -1,0 +1,10 @@
+pandas
+numpy
+matplotlib
+duckdb
+requests
+zstandard
+tqdm
+
+# Only needed by scratch/archive_matching_v1_levenshtein_jaccard.py (superseded matcher, kept for reference)
+nltk
