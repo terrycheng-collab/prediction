@@ -1,0 +1,350 @@
+\documentclass[11pt]{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{booktabs}
+\usepackage{microtype}
+\usepackage{natbib}
+\usepackage{setspace}
+\usepackage{threeparttable}
+\usepackage{xcolor}
+\usepackage[colorlinks=true,allcolors=blue]{hyperref}
+
+\setlength{\parindent}{1.5em}
+\setlength{\parskip}{0pt}
+\onehalfspacing
+
+\title{Resolution Risk in Prediction Markets}
+\author{Terry Cheng}
+\date{June 2026}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Prediction-market prices are commonly interpreted as probabilities of underlying events.
+That interpretation assumes that the exchange will map the realized event into the intended
+contract payoff. This project studies the possibility that prices also reflect
+\emph{resolution risk}: uncertainty that a contract will be resolved in a manner that differs
+from traders' economic interpretation of its terms. We construct high-precision matches
+between Polymarket and Kalshi contracts and study two 2025 controversies involving
+Polymarket's UMA-based resolution process. The primary outcomes measure each price's
+absolute distance from 0.5 and Polymarket's distance relative to Kalshi's. Preliminary
+estimates do not support the simple hypothesis that a public resolution controversy causes
+prices broadly to attenuate toward 0.5. The exercise is informative, but it is not yet a
+causal estimate: the available data, matching procedure, event windows, weights, and standard
+errors all require further work.
+\end{abstract}
+
+\section{Introduction}
+
+A binary prediction-market price is often read as the market's probability that an event
+will occur. Even in an ideal contract this interpretation requires assumptions about beliefs,
+risk preferences, wealth, and trading frictions \citep{manski2006,wolfers2006}. In practice,
+it also requires confidence in the institution that converts the realized event into a
+payoff. A trader may believe that an event occurred while assigning positive probability to
+the exchange resolving the contract the other way. The contract price then reflects both
+beliefs about the event and beliefs about resolution.
+
+This project studies that second component, which we call \emph{resolution risk}. The
+institutional comparison is between Polymarket and Kalshi. During the period studied here,
+the matched Polymarket contracts were ultimately backed by UMA's optimistic-oracle and
+dispute process, either directly or through Polymarket's negative-risk adapter. Kalshi
+resolves contracts internally: the exchange applies its own contract rules and settlement
+procedures rather than relying on UMA or another tokenholder-based dispute mechanism.
+Equivalent contracts on the two exchanges are therefore exposed to similar event news but
+different resolution institutions.
+
+We focus on two public controversies: the March 24, 2025 Ukraine mineral-rights resolution
+and the June 30--July 8, 2025 Zelensky-suit episode. The research question is whether these
+episodes changed the informativeness of Polymarket prices relative to matched Kalshi prices.
+Our main hypothesis is attenuation. If a controversy adds uncertainty about which side of a
+contract will be paid, then a Polymarket price should move toward 0.5 relative to an otherwise
+equivalent Kalshi price. This prediction is deliberately symmetric: the relevant object is
+not whether the average Yes price rises or falls, but whether Polymarket prices become less
+extreme.
+
+\section{Related Literature and Contribution}
+
+The project is closest to three literatures. First, prediction-market prices need not equal
+literal probabilities, even when markets aggregate dispersed information
+\citep{wolfers2004,manski2006,wolfers2006}. Resolution risk supplies a distinct institutional
+wedge: a claim can be priced differently even when traders agree about the underlying event
+because they disagree about how the contract will be interpreted or enforced.
+
+Second, work on manipulation in prediction markets asks whether strategic trading can
+distort prices or whether traders can change the event being forecast
+\citep{hanson2006,ottaviani2007,rhode2008}. Our mechanism is different. The object at risk is
+the mapping from the event to the payoff, not necessarily the event itself or the trading
+price before resolution. This connects the paper to recent work on semantic ambiguity in
+prediction-market contracts \citep{fisman2026} and to the computer-science literature on
+blockchain oracles, governance, and manipulation-resistant data feeds
+\citep{eskandari2021}.
+
+Third, matched contracts across exchanges resemble law-of-one-price comparisons. Limits to
+arbitrage, collateral constraints, segmentation, and market-specific liquidity can sustain
+price wedges even for closely related claims \citep{shleifer1997,froot1999,garleanu2011}.
+These forces are not merely background citations; they are competing explanations that the
+empirical design must address. The intended contribution is therefore narrow: to test
+whether public shocks to the perceived credibility of a resolution institution alter the
+informativeness of otherwise comparable prediction-market prices.
+
+\section{Institutions and Hypothesis}
+
+UMA uses an optimistic-oracle design. An outcome is proposed, a challenge period allows a
+dispute, and disputed cases can ultimately reach UMA's decentralized verification mechanism.
+This structure is designed to make incorrect resolution costly, but it also makes the final
+payoff depend on an institutional process that is distinct from the underlying event.
+Polymarket's negative-risk markets add an adapter layer, but the matched sample's ultimate
+resolver remains UMA.
+
+Let $p^{P}_{it}$ and $p^{K}_{it}$ denote the Polymarket and Kalshi prices for matched contract
+$i$ at time $t$. Define each price's extremity as
+\begin{align}
+A^{P}_{it} &= \left|p^{P}_{it}-0.5\right|, \\
+A^{K}_{it} &= \left|p^{K}_{it}-0.5\right|,
+\end{align}
+and define relative extremity as
+\begin{equation}
+R_{it}=A^{P}_{it}-A^{K}_{it}.
+\end{equation}
+A negative change in $A^{P}_{it}$ indicates that Polymarket moves toward 0.5 after a
+controversy. A negative change in $R_{it}$ indicates attenuation on Polymarket relative to
+the matched Kalshi contract. The second outcome is the cleaner comparison because it removes
+common changes in how close the event itself is to resolution. We do not emphasize a
+directional Polymarket--Kalshi price difference because resolution uncertainty can impair
+either side of a binary contract; its sign depends on which outcome is vulnerable.
+
+\section{Data and Matching}
+
+\subsection{Source data and price construction}
+
+The analysis uses the J.D. Becker archive of Polymarket and Kalshi market and trade data.
+For each event window, we construct observations at 5:00 a.m. and 5:00 p.m. Pacific using
+the most recent trade at or before the cutoff. The analysis is therefore a panel of
+\emph{as-of price snapshots}, not a synchronized panel of contemporaneous quotes or order
+books. A price may be many hours or days old when a market trades infrequently.
+
+This distinction is especially important for nonprice variables. The archive and
+pipeline do not provide aligned time series for bid--ask spreads, depth, open interest, or
+exchange-level participation. Polymarket volume enters as a market-level snapshot rather
+than a contemporaneous, event-time measure, and comparable Kalshi volume histories are not
+used. Consequently, the analysis cannot determine whether a price response is
+accompanied by a change in liquidity or participation, and its volume weights are ex post.
+
+\subsection{Deterministic matching}
+
+The matching pipeline parses each contract into a structured key containing the market
+family and relevant semantic fields, such as predicate, subject, object, threshold, and
+deadline. Aliases and economically equivalent deadlines are normalized before exact keys
+are joined across exchanges. The parser covers 17 contract families, including
+elections, office exits, leader meetings, sports, Federal Reserve decisions, policy actions,
+and asset-price thresholds.
+
+The procedure begins with 5,680 Polymarket markets and 8,992 Kalshi markets. It parses 1,346
+Polymarket markets and 1,979 Kalshi markets, then produces 150 deterministic matched rows
+representing 149 unique keys. Parsing rates are low in counts---23.7 percent for Polymarket
+and 22.0 percent for Kalshi---but much higher when weighted by reported volume. On-chain
+checks classify 15 matched Polymarket markets as direct UMA markets and 135 as resolving
+through the negative-risk adapter to UMA.
+
+A more flexible matcher could improve coverage without sacrificing the accuracy of the
+deterministic approach by separating candidate generation from adjudication.
+Markets could first be segmented by broad family, date range, and named entities. Within
+each segment, embeddings or lexical retrieval could generate a small candidate set. A
+language model could then compare the full contract text and resolution rules using a fixed
+schema, returning a match decision, the specific rule differences, and a calibrated
+confidence score. Human review of accepted matches would preserve a high-precision final
+sample while extending the method to contracts not covered by hand-written parsers.
+
+\section{Empirical Design}
+
+For each controversy, the empirical analysis constructs a symmetric seven-day window around the
+event period and estimates
+\begin{equation}
+Y_{it}=\alpha_i+\beta\,\mathrm{Post}_{t}+\varepsilon_{it},
+\label{eq:empirical}
+\end{equation}
+where $Y_{it}$ is either $A^{P}_{it}$ or $R_{it}$ and $\alpha_i$ is a matched-contract fixed
+effect. Observations are weighted by the available Polymarket volume measure. The mineral-
+rights event contributes 105 matched pairs and 3,105 observations; the Zelensky-suit event
+contributes 57 pairs and 2,565 observations. A narrower ``resolution-risk-exposed'' sample
+keeps elections, office exits, leader contacts, and policy actions, leaving 12 and 19 pairs
+for the two episodes.
+
+Equation \eqref{eq:empirical} is a pre/post fixed-effect comparison, not a modern dynamic
+event study or a fully specified difference-in-differences design. Kalshi enters through the
+construction of $R_{it}$ rather than through an exchange-level panel with matched-pair-by-
+time fixed effects. The present specification also imposes a single discontinuity at the
+start of each episode even though the Zelensky controversy spans multiple days.
+
+\section{Preliminary Results}
+
+Table \ref{tab:results} reports the estimates in the conventional economics format:
+coefficients followed by standard errors in parentheses. Negative coefficients would support
+attenuation toward 0.5. The estimates are generally positive. In the full sample, the
+mineral-rights episode produces essentially no relative change, while the Zelensky episode
+is associated with a 0.47 percentage point increase in Polymarket's extremity relative to
+Kalshi. In the resolution-risk-exposed sample, the corresponding Zelensky estimate is a
+1.47 percentage point increase. These patterns reject the simplest version of the
+attenuation hypothesis in this specification.
+
+\begin{table}[!htbp]
+\centering
+\caption{Resolution Controversies and Price Extremity}
+\label{tab:results}
+\begin{threeparttable}
+\small
+\begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}lcccc}
+\toprule
+& \multicolumn{2}{c}{Mineral rights} & \multicolumn{2}{c}{Zelensky suit} \\
+\cmidrule(lr){2-3}\cmidrule(lr){4-5}
+& $|P-.5|$ & $|P-.5|-|K-.5|$ & $|P-.5|$ & $|P-.5|-|K-.5|$ \\
+& (1) & (2) & (3) & (4) \\
+\midrule
+\multicolumn{5}{l}{\textit{Panel A: All matched contracts}} \\
+Post
+    & 0.0010 & 0.0003 & 0.0197 & 0.0047 \\
+    & (0.0004) & (0.0004) & (0.0014) & (0.0008) \\
+Pre-event mean
+    & 0.4564 & 0.0071 & 0.3728 & -0.0197 \\
+Observations
+    & 3,105 & 3,105 & 2,565 & 2,565 \\
+Matched contracts
+    & 105 & 105 & 57 & 57 \\
+\addlinespace
+\multicolumn{5}{l}{\textit{Panel B: Resolution-risk-exposed contracts}} \\
+Post
+    & 0.0117 & 0.0012 & 0.0204 & 0.0147 \\
+    & (0.0031) & (0.0027) & (0.0016) & (0.0013) \\
+Pre-event mean
+    & 0.1969 & 0.0356 & 0.3437 & -0.0596 \\
+Observations
+    & 355 & 355 & 817 & 817 \\
+Matched contracts
+    & 12 & 12 & 19 & 19 \\
+\midrule
+Contract fixed effects & Yes & Yes & Yes & Yes \\
+Polymarket-volume weights & Yes & Yes & Yes & Yes \\
+\bottomrule
+\end{tabular*}
+\begin{tablenotes}[flushleft]
+\footnotesize
+\item \textit{Notes:} Each observation is an as-of price snapshot for a deterministic
+Polymarket--Kalshi contract match. The dependent variables are Polymarket's absolute distance
+from 0.5 and that distance minus the matched Kalshi contract's absolute distance from 0.5.
+The reported coefficient is from a weighted regression of the dependent variable on a post
+indicator and matched-contract fixed effects. Parentheses contain the conventional standard
+errors used in the empirical analysis. They are not clustered and should not be used for
+formal inference. No significance stars are reported. The resolution-risk-exposed sample
+contains elections, office exits, leader contacts, and policy actions.
+\end{tablenotes}
+\end{threeparttable}
+\end{table}
+
+The results do not establish that resolution concerns had no effect. The hypothesized
+response may be concentrated in the disputed contracts themselves, in contracts near their
+terminal dates, or in markets whose rules contain genuine interpretive ambiguity. It may
+also appear in spreads, depth, withdrawal of liquidity, or trading activity rather than in
+price attenuation. Conversely, the positive coefficients may simply reflect stale prices,
+ordinary event news, compositional changes, or the mechanical behavior of absolute-value
+outcomes. The present estimates cannot distinguish these explanations.
+
+\section{Limitations and Required Empirical Work}
+
+The analysis has four central limitations.
+
+\paragraph{Data frequency and market quality.}
+Last-trade snapshots are not synchronized executable prices. In the constructed panels,
+Kalshi observations are substantially staler than Polymarket observations, with long tails
+of contracts that have not traded for days. The analysis should impose maximum trade-age
+restrictions and, where available, use synchronized bid and ask quotes. Volume and other
+market-quality outcomes require genuine event-time series rather than static snapshots.
+
+\paragraph{Matching and contract equivalence.}
+Deterministic title parsing does not compare full rule text, and exact normalized keys can
+hide economically important differences. Accepted matches should be checked against full
+resolution rules, especially the resolution source, deadline, threshold, and cancellation
+provisions. The segmented retrieval-plus-language-model procedure described above could
+increase coverage while retaining human validation of the final sample.
+
+\paragraph{Event definition and windows.}
+The one-day mineral-rights window and multi-day Zelensky window are not directly comparable.
+The analysis should document the key proposal, dispute, vote, resolution, and public-reporting
+timestamps, then report event-time estimates under narrower and wider windows.
+
+\paragraph{Inference.}
+The reported standard errors do not account adequately for repeated observations within a
+contract. Inference should cluster by matched contract, and the small number of controversy
+events means the evidence should remain descriptive. Results should also be reported
+unweighted and with predetermined pre-event weights because ex-post Polymarket volume may
+respond to the controversy itself.
+
+\section{Conclusion}
+
+The project has established a useful data and matching infrastructure for studying
+institutional risk in prediction markets. It has not yet established that UMA resolution
+controversies caused a broad loss of price informativeness. In the matched sample,
+Polymarket prices generally become more, rather than less, extreme after the two episodes,
+including relative to Kalshi after the Zelensky-suit controversy. These findings are worth
+reporting precisely because they discipline the theory: a general attenuation-toward-0.5
+mechanism is too simple for the available data. Further work should focus on contract
+validation, synchronized market data, event
+timing, and defensible inference.
+
+\begin{thebibliography}{99}
+
+\bibitem[Rezaei Sanjabi(2026)]{fisman2026}
+Rezaei Sanjabi, Rouzbeh. 2026.
+``The Semantic Risk Premium.'' SSRN Working Paper 6126806.
+
+\bibitem[Eskandari et al.(2021)]{eskandari2021}
+Eskandari, Shayan, Mehdi Salehi, Wanyun Catherine Gu, and Jeremy Clark. 2021.
+``SoK: Oracles from the Ground Truth to Market Manipulation.''
+\textit{Proceedings of the 3rd ACM Conference on Advances in Financial Technologies}.
+
+\bibitem[Froot and Dabora(1999)]{froot1999}
+Froot, Kenneth A., and Emil M. Dabora. 1999.
+``How Are Stock Prices Affected by the Location of Trade?''
+\textit{Journal of Financial Economics} 53 (2): 189--216.
+
+\bibitem[G\^arleanu and Pedersen(2011)]{garleanu2011}
+G\^arleanu, Nicolae, and Lasse Heje Pedersen. 2011.
+``Margin-Based Asset Pricing and Deviations from the Law of One Price.''
+\textit{Review of Financial Studies} 24 (6): 1980--2022.
+
+\bibitem[Hanson, Oprea, and Porter(2006)]{hanson2006}
+Hanson, Robin, Ryan Oprea, and David Porter. 2006.
+``Information Aggregation and Manipulation in an Experimental Market.''
+\textit{Journal of Economic Behavior \& Organization} 60 (4): 449--459.
+
+\bibitem[Manski(2006)]{manski2006}
+Manski, Charles F. 2006.
+``Interpreting the Predictions of Prediction Markets.''
+\textit{Economics Letters} 91 (3): 425--429.
+
+\bibitem[Ottaviani and S\o rensen(2007)]{ottaviani2007}
+Ottaviani, Marco, and Peter Norman S\o rensen. 2007.
+``Outcome Manipulation in Corporate Prediction Markets.''
+\textit{Journal of the European Economic Association} 5 (2--3): 554--563.
+
+\bibitem[Rhode and Strumpf(2008)]{rhode2008}
+Rhode, Paul W., and Koleman S. Strumpf. 2008.
+``Manipulating Political Stock Markets: A Field Experiment and a Century of
+Observational Data.'' Working paper.
+
+\bibitem[Shleifer and Vishny(1997)]{shleifer1997}
+Shleifer, Andrei, and Robert W. Vishny. 1997.
+``The Limits of Arbitrage.'' \textit{Journal of Finance} 52 (1): 35--55.
+
+\bibitem[Wolfers and Zitzewitz(2004)]{wolfers2004}
+Wolfers, Justin, and Eric Zitzewitz. 2004.
+``Prediction Markets.'' \textit{Journal of Economic Perspectives} 18 (2): 107--126.
+
+\bibitem[Wolfers and Zitzewitz(2006)]{wolfers2006}
+Wolfers, Justin, and Eric Zitzewitz. 2006.
+``Interpreting Prediction Market Prices as Probabilities.'' NBER Working Paper 12200.
+
+\end{thebibliography}
+
+\end{document}
