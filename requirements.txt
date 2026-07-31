@@ -5,6 +5,7 @@ duckdb
 requests
 zstandard
 tqdm
+scikit-learn
 
 # Only needed by scratch/archive_matching_v1_levenshtein_jaccard.py (superseded matcher, kept for reference)
 nltk
