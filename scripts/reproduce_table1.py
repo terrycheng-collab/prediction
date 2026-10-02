@@ -12,10 +12,19 @@ from these runs:
            leader contacts, policy actions):
       --uma-backed-only --pm-resolver-proxy uma_risk_exposed --outcome-mode attenuation
 
+Each panel is run twice:
+
+  published  --duckdb-timezone America/Los_Angeles. The published numbers were
+             built with DuckDB's session time zone set to Pacific, which shifted
+             every Kalshi trade 7-8h earlier, so Kalshi snapshots could use trades
+             from after the cutoff. This mode is checked against the values typed
+             into the .tex and sets the exit status (non-zero if any value differs
+             at the paper's 4-decimal precision).
+  corrected  --duckdb-timezone UTC (the event study's default). Printed alongside,
+             with differences from the published values.
+
 Outputs (panels, timeseries, regressions, plots) go to exports/table1/ so the
-existing exports are left untouched. The script prints the table in the
-paper's layout and checks every reported number against the values typed into
-the .tex; it exits non-zero if any differ at the paper's 4-decimal precision.
+existing exports are left untouched.
 
 Usage (from the repo root):
     python scripts/reproduce_table1.py [--data-root data] [--skip-run]
@@ -33,15 +42,20 @@ import pandas as pd
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 
+MODES = {
+    "published": "America/Los_Angeles",
+    "corrected": "UTC",
+}
+
 PANELS = {
     "A": {
         "label": "Panel A: All matched contracts",
-        "prefix": "table1_panel_a",
+        "prefix": "panel_a",
         "flags": ["--uma-backed-only", "--outcome-mode", "attenuation"],
     },
     "B": {
         "label": "Panel B: Resolution-risk-exposed contracts",
-        "prefix": "table1_panel_b",
+        "prefix": "panel_b",
         "flags": [
             "--uma-backed-only",
             "--pm-resolver-proxy",
@@ -87,7 +101,11 @@ ROWS = [
 ]
 
 
-def run_panel(panel: dict, data_root: Path, out_dir: Path) -> None:
+def output_prefix(mode: str, panel: dict) -> str:
+    return f"table1_{mode}_{panel['prefix']}"
+
+
+def run_panel(mode: str, panel: dict, data_root: Path, out_dir: Path) -> None:
     cmd = [
         sys.executable,
         str(REPO_ROOT / "resolution_risk_event_study.py"),
@@ -96,7 +114,9 @@ def run_panel(panel: dict, data_root: Path, out_dir: Path) -> None:
         "--exports-dir",
         str(out_dir),
         "--output-prefix",
-        panel["prefix"],
+        output_prefix(mode, panel),
+        "--duckdb-timezone",
+        MODES[mode],
         *panel["flags"],
     ]
     print("$", " ".join(cmd), flush=True)
@@ -121,34 +141,42 @@ def main() -> None:
 
     if not args.skip_run:
         args.out_dir.mkdir(parents=True, exist_ok=True)
-        for panel in PANELS.values():
-            run_panel(panel, args.data_root.resolve(), args.out_dir.resolve())
+        for mode in MODES:
+            for panel in PANELS.values():
+                run_panel(mode, panel, args.data_root.resolve(), args.out_dir.resolve())
 
     header = ["", "(1) MR |P-.5|", "(2) MR |P-.5|-|K-.5|", "(3) ZS |P-.5|", "(4) ZS |P-.5|-|K-.5|"]
     widths = [20, 15, 22, 15, 22]
-    print()
-    print("Table 1: Resolution Controversies and Price Extremity")
-    print("".join(h.rjust(w) if i else h.ljust(w) for i, (h, w) in enumerate(zip(header, widths))))
+
+    def print_row(label: str, cells: list[str]) -> None:
+        print(label.ljust(widths[0]) + "".join(c.rjust(w) for c, w in zip(cells, widths[1:])))
 
     mismatches = []
-    for key, panel in PANELS.items():
-        cols = load_columns(args.out_dir, panel["prefix"])
-        print(panel["label"])
-        for label, field, fmt in ROWS:
-            values = cols[field].tolist()
-            cells = [format_value(fmt, v) for v in values]
-            print(label.ljust(widths[0]) + "".join(c.rjust(w) for c, w in zip(cells, widths[1:])))
-            for col_idx, (value, expected) in enumerate(zip(values, PAPER[key][field])):
-                if format_value(fmt, value) != format_value(fmt, expected):
-                    mismatches.append(f"Panel {key} {field} col ({col_idx + 1}): got {value}, paper {expected}")
+    for mode, timezone in MODES.items():
+        print()
+        print(f"Table 1 ({mode}, DuckDB TimeZone={timezone}): Resolution Controversies and Price Extremity")
+        print("".join(h.rjust(w) if i else h.ljust(w) for i, (h, w) in enumerate(zip(header, widths))))
+        for key, panel in PANELS.items():
+            cols = load_columns(args.out_dir, output_prefix(mode, panel))
+            print(panel["label"])
+            for label, field, fmt in ROWS:
+                values = cols[field].tolist()
+                print_row(label, [format_value(fmt, v) for v in values])
+                if mode == "corrected" and field in ("post_coef", "pre_mean"):
+                    print_row("  vs. published", [f"{v - p:+.4f}" for v, p in zip(values, PAPER[key][field])])
+                if mode != "published":
+                    continue
+                for col_idx, (value, expected) in enumerate(zip(values, PAPER[key][field])):
+                    if format_value(fmt, value) != format_value(fmt, expected):
+                        mismatches.append(f"Panel {key} {field} col ({col_idx + 1}): got {value}, paper {expected}")
 
     print()
     if mismatches:
-        print("MISMATCH vs. resolution_risk_outline_revised.tex:")
+        print("MISMATCH between published-mode run and resolution_risk_outline_revised.tex:")
         for line in mismatches:
             print("  " + line)
         sys.exit(1)
-    print("All Table 1 values match resolution_risk_outline_revised.tex.")
+    print("Published-mode run matches resolution_risk_outline_revised.tex exactly.")
 
 
 if __name__ == "__main__":
