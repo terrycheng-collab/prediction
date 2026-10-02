@@ -99,8 +99,9 @@ def asof_snapshots(
     left = targets_df.dropna(subset=[by_col, target_time_col]).copy()
     right = trades_df.dropna(subset=[by_col, trade_time_col]).copy()
 
-    left[target_time_col] = pd.to_datetime(left[target_time_col], utc=True)
-    right[trade_time_col] = pd.to_datetime(right[trade_time_col], utc=True)
+    # merge_asof requires both keys at the same resolution (DuckDB yields us, pandas ns).
+    left[target_time_col] = pd.to_datetime(left[target_time_col], utc=True).astype("datetime64[ns, UTC]")
+    right[trade_time_col] = pd.to_datetime(right[trade_time_col], utc=True).astype("datetime64[ns, UTC]")
     left = left.sort_values([target_time_col, by_col]).reset_index(drop=True)
     right = right.sort_values([trade_time_col, by_col]).reset_index(drop=True)
 

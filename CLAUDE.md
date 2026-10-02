@@ -69,6 +69,16 @@ Data flows through these scripts in order:
 Setup: `pip install -r requirements.txt`, then run the scripts in the order above with
 `--data-root` pointing at the extracted archive (default `data/`).
 
+**Reproducing Table 1:** `python scripts/reproduce_table1.py` (add `--data-root <path>` if the
+archive isn't at `data/`; ~40 s). It runs `resolution_risk_event_study.py` with the flags behind
+each panel (Panel A: `--uma-backed-only --outcome-mode attenuation`; Panel B: same plus
+`--pm-resolver-proxy uma_risk_exposed`), writes to `exports/table1/` (gitignored), and checks
+every value against the .tex, exiting non-zero on any mismatch. Note the event-study script's
+default `--outcome-mode raw` regresses price *levels*, not extremity, so its default output
+(`exports/resolution_risk_regressions.csv`, negative coefficients) is not Table 1. Those same
+two panels already exist as `exports/resolution_risk_uma_onchain_attenuation_*` and
+`exports/resolution_risk_uma_onchain_similar_types_attenuation_*`.
+
 **Current headline result** (see the outline's Table 1): estimated `Post` coefficients are
 generally *positive*, not negative — i.e. Polymarket prices become *more* extreme, not less,
 after both controversies, including relative to Kalshi after the Zelensky-suit episode. This
