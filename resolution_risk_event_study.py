@@ -25,6 +25,12 @@ EVENTS = {
 }
 
 PACIFIC_TZ = "America/Los_Angeles"
+# DuckDB casts TIMESTAMPTZ columns (Kalshi created_time) to naive TIMESTAMP in the session time
+# zone, and the results are then labelled UTC. The session must therefore be UTC. Before
+# 2026-10 it defaulted to the machine zone, which on a Pacific machine shifted every Kalshi
+# trade 7-8h earlier (snapshots saw trades from after the cutoff). Pass
+# --duckdb-timezone America/Los_Angeles to reproduce those published numbers.
+DEFAULT_DUCKDB_TIMEZONE = "UTC"
 PM_RESOLVER_PROXIES = {
     "uma_risk_exposed": {"election", "office_exit", "leader_contact", "policy_action"},
     "uma_likely_objective": {"sports", "fed_count", "fed_decision"},
@@ -281,7 +287,12 @@ def attach_resolver_map(matches: pd.DataFrame, resolver_map_path: Path | None) -
     return out
 
 
-def fetch_pm_token_prices(data_root: Path, token_ids: pd.Series, max_cutoff_utc: pd.Timestamp) -> pd.DataFrame:
+def fetch_pm_token_prices(
+    data_root: Path,
+    token_ids: pd.Series,
+    max_cutoff_utc: pd.Timestamp,
+    duckdb_timezone: str = DEFAULT_DUCKDB_TIMEZONE,
+) -> pd.DataFrame:
     try:
         import duckdb
     except ImportError as exc:
@@ -302,6 +313,7 @@ def fetch_pm_token_prices(data_root: Path, token_ids: pd.Series, max_cutoff_utc:
 
     token_keys = pd.DataFrame({"token_id_pm": sorted(set(token_ids.dropna().astype(str)))})
     con = duckdb.connect()
+    con.execute(f"SET TimeZone = '{duckdb_timezone}'")
     con.register("pm_token_keys", token_keys)
     final_cutoff = max_cutoff_utc.tz_convert("UTC").tz_localize(None).strftime("%Y-%m-%d %H:%M:%S")
     sql = """
@@ -345,7 +357,12 @@ def fetch_pm_token_prices(data_root: Path, token_ids: pd.Series, max_cutoff_utc:
     return trades
 
 
-def fetch_kalshi_prices(data_root: Path, tickers: pd.Series, max_cutoff_utc: pd.Timestamp) -> pd.DataFrame:
+def fetch_kalshi_prices(
+    data_root: Path,
+    tickers: pd.Series,
+    max_cutoff_utc: pd.Timestamp,
+    duckdb_timezone: str = DEFAULT_DUCKDB_TIMEZONE,
+) -> pd.DataFrame:
     try:
         import duckdb
     except ImportError as exc:
@@ -361,6 +378,7 @@ def fetch_kalshi_prices(data_root: Path, tickers: pd.Series, max_cutoff_utc: pd.
 
     ticker_keys = pd.DataFrame({"market_id_kalshi": sorted(set(tickers.dropna().astype(str)))})
     con = duckdb.connect()
+    con.execute(f"SET TimeZone = '{duckdb_timezone}'")
     con.register("kalshi_ticker_keys", ticker_keys)
     final_cutoff = max_cutoff_utc.tz_convert("UTC").tz_localize(None).strftime("%Y-%m-%d %H:%M:%S")
     sql = """
@@ -379,7 +397,12 @@ def fetch_kalshi_prices(data_root: Path, tickers: pd.Series, max_cutoff_utc: pd.
     return trades
 
 
-def build_event_active_panel(matches: pd.DataFrame, data_root: Path, window_days: int) -> pd.DataFrame:
+def build_event_active_panel(
+    matches: pd.DataFrame,
+    data_root: Path,
+    window_days: int,
+    duckdb_timezone: str = DEFAULT_DUCKDB_TIMEZONE,
+) -> pd.DataFrame:
     all_cutoffs = []
     for event_slug, event_spec in EVENTS.items():
         cutoffs = build_cutoffs(event_spec, window_days)
@@ -388,8 +411,8 @@ def build_event_active_panel(matches: pd.DataFrame, data_root: Path, window_days
     cutoffs = pd.concat(all_cutoffs, ignore_index=True)
     max_cutoff_utc = pd.to_datetime(cutoffs["cutoff_utc"], utc=True).max()
 
-    pm_trades = fetch_pm_token_prices(data_root, matches["token_id_pm"], max_cutoff_utc)
-    k_trades = fetch_kalshi_prices(data_root, matches["market_id_kalshi"], max_cutoff_utc)
+    pm_trades = fetch_pm_token_prices(data_root, matches["token_id_pm"], max_cutoff_utc, duckdb_timezone)
+    k_trades = fetch_kalshi_prices(data_root, matches["market_id_kalshi"], max_cutoff_utc, duckdb_timezone)
 
     pm_targets = (
         matches[["contract_pair_id", "token_id_pm"]]
@@ -553,9 +576,11 @@ def build_timeseries(panel: pd.DataFrame) -> pd.DataFrame:
     return pd.DataFrame(rows).sort_values(["event_slug", "cutoff_local"])
 
 
-def fixed_effect_post_regression(panel: pd.DataFrame, outcome: str) -> dict[str, float | int | str]:
-    df = panel.dropna(subset=[outcome, "post", "weight_pm_volume", "contract_pair_id"]).copy()
-    df = df[df["weight_pm_volume"].gt(0)].copy()
+def fixed_effect_post_regression(
+    panel: pd.DataFrame, outcome: str, weight_col: str = "weight_pm_volume"
+) -> dict[str, float | int | str]:
+    df = panel.dropna(subset=[outcome, "post", weight_col, "contract_pair_id"]).copy()
+    df = df[df[weight_col].gt(0)].copy()
     n_obs = len(df)
     n_contracts = int(df["contract_pair_id"].nunique())
 
@@ -574,7 +599,7 @@ def fixed_effect_post_regression(panel: pd.DataFrame, outcome: str) -> dict[str,
 
     df["_y"] = df[outcome].astype(float)
     df["_x"] = df["post"].astype(float)
-    df["_w"] = df["weight_pm_volume"].astype(float)
+    df["_w"] = df[weight_col].astype(float)
     df["_y_mean_i"] = df.groupby("contract_pair_id")["_y"].transform("mean")
     df["_x_mean_i"] = df.groupby("contract_pair_id")["_x"].transform("mean")
     df["_yd"] = df["_y"] - df["_y_mean_i"]
@@ -777,6 +802,11 @@ def main() -> None:
         help="Regression and plot outcome set.",
     )
     parser.add_argument("--output-prefix", default="resolution_risk")
+    parser.add_argument(
+        "--duckdb-timezone",
+        default=DEFAULT_DUCKDB_TIMEZONE,
+        help="DuckDB session time zone. Keep UTC; America/Los_Angeles reproduces the pre-2026-10 Kalshi time shift.",
+    )
     args = parser.parse_args()
 
     exports_dir = args.exports_dir
@@ -796,7 +826,7 @@ def main() -> None:
         matches = matches[matches["uma_backed"].eq(True)].copy()
         if matches.empty:
             raise ValueError("No matches survived --uma-backed-only.")
-    panel = build_event_active_panel(matches, args.data_root, args.window_days)
+    panel = build_event_active_panel(matches, args.data_root, args.window_days, args.duckdb_timezone)
     outcomes = OUTCOME_MODES[args.outcome_mode]
     timeseries = build_timeseries(panel)
     regressions = build_regressions(panel, outcomes)
